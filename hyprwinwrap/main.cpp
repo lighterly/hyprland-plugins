@@ -88,21 +88,7 @@ void onRenderStage(eRenderStage stage) {
 }
 
 void onCommitSubsurface(CSubsurface* thisptr) {
-    const auto PWINDOW = thisptr->m_pWLSurface->getWindow();
-
-    if (!PWINDOW || std::find_if(bgWindows.begin(), bgWindows.end(), [PWINDOW](const auto& ref) { return ref.lock() == PWINDOW; }) == bgWindows.end()) {
-        ((origCommitSubsurface)subsurfaceHook->m_pOriginal)(thisptr);
-        return;
-    }
-
-    // cant use setHidden cuz that sends suspended and shit too that would be laggy
-    PWINDOW->m_bHidden = false;
-
-    ((origCommitSubsurface)subsurfaceHook->m_pOriginal)(thisptr);
-    if (const auto MON = g_pCompositor->getMonitorFromID(PWINDOW->m_iMonitorID); MON)
-        g_pHyprOpenGL->markBlurDirtyForMonitor(MON);
-
-    PWINDOW->m_bHidden = true;
+    return;
 }
 
 void onCommit(void* owner, void* data) {
