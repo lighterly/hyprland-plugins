@@ -80,7 +80,7 @@ void CHyprBar::onMouseDown(SCallbackInfo& info, IPointer::SButtonEvent e) {
         return;
     }
 
-    if (e.state != WLR_BUTTON_PRESSED) {
+    if (e.state != WL_POINTER_BUTTON_STATE_PRESSED) {
 
         if (m_bCancelledDown)
             info.cancelled = true;
@@ -389,7 +389,7 @@ void CHyprBar::draw(CMonitor* pMonitor, float a) {
 
     const auto PWINDOW = m_pWindow.lock();
 
-    if (!PWINDOW->m_sSpecialRenderData.decorate)
+    if (!PWINDOW->m_sWindowData.decorate.valueOrDefault())
         return;
 
     static auto* const PCOLOR        = (Hyprlang::INT* const*)HyprlandAPI::getConfigValue(PHANDLE, "plugin:hyprbars:bar_color")->getDataStaticPtr();

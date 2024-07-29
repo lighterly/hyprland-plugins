@@ -5,6 +5,7 @@
 
 #include <hyprland/src/includes.hpp>
 #include <any>
+#include <sstream>
 
 #define private public
 #include <hyprland/src/Compositor.hpp>
@@ -139,7 +140,7 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle) {
     for (auto& fn : fns) {
         if (!fn.demangled.contains("CSubsurface"))
             continue;
-        subsurfaceHook = HyprlandAPI::createFunctionHook(PHANDLE, fns[0].address, (void*)&onCommitSubsurface);
+        subsurfaceHook = HyprlandAPI::createFunctionHook(PHANDLE, fn.address, (void*)&onCommitSubsurface);
     }
 
     fns = HyprlandAPI::findFunctionsByName(PHANDLE, "listener_commitWindow");
